@@ -122,8 +122,8 @@ g++ -std=gnu++17 ast.cpp symbol_table.cpp semantic.cpp interpreter.cpp tac.cpp c
 ### Run
 
 ```
-.\compiler.exe input.cpp            # only the program's own output
-.\compiler.exe input.cpp --debug    # every compiler phase, then the output
+.\compiler.exe input.cpp               # only the program's own output
+.\compiler.exe input.cpp --debug       # every compiler phase, then the output
 ```
 
 You can also paste code straight into the terminal instead of using a file:
