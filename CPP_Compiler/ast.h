@@ -48,7 +48,10 @@ enum NodeType {
     NODE_RETURN,          // children[0] = expr (optional)
     NODE_DOWHILE,         // children[0]=body, children[1]=cond
     NODE_SIZEOF,          // datatype set directly, OR sval(name) to look up a variable's type
-    NODE_TERNARY          // children[0]=cond, children[1]=then-expr, children[2]=else-expr
+    NODE_TERNARY,         // children[0]=cond, children[1]=then-expr, children[2]=else-expr
+    NODE_SWITCH,          // children[0]=switch expr, children[1]=NODE_BLOCK of NODE_CASE/NODE_DEFAULT
+    NODE_CASE,            // children[0]=case value expr, children[1]=NODE_BLOCK of statements (fall-through)
+    NODE_DEFAULT          // children[0]=NODE_BLOCK of statements
 };
 
 // Human readable datatype strings used in NODE_VARDECL::datatype:

@@ -100,7 +100,7 @@ int main()
         cout << "You are a child." << endl;
     }
     
-    switch statement
+    //switch statement
     int day = 3;
     switch (day) {
         case 1:
@@ -152,7 +152,8 @@ int main()
     } else {
         cout << "The number is not a positive number." << endl;
     }
-    checking loops with break and continue statements
+
+    //checking loops with break and continue statements
     cout << "Loop with Break and Continue:" << endl;
     for (int i = 0; i < 10; i++) {
         if (i == 5) {

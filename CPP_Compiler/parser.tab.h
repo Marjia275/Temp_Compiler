@@ -80,24 +80,27 @@
      KW_LONG = 284,
      KW_UNSIGNED = 285,
      KW_SIZEOF = 286,
-     EQ = 287,
-     NE = 288,
-     LE = 289,
-     GE = 290,
-     AND = 291,
-     OR = 292,
-     SHL = 293,
-     SHR = 294,
-     PLUSEQ = 295,
-     MINUSEQ = 296,
-     MULEQ = 297,
-     DIVEQ = 298,
-     INC = 299,
-     DEC = 300,
-     UMINUS = 301,
-     NOTPREC = 302,
-     TILDEPREC = 303,
-     SIZEOFPREC = 304
+     KW_SWITCH = 287,
+     KW_CASE = 288,
+     KW_DEFAULT = 289,
+     EQ = 290,
+     NE = 291,
+     LE = 292,
+     GE = 293,
+     AND = 294,
+     OR = 295,
+     SHL = 296,
+     SHR = 297,
+     PLUSEQ = 298,
+     MINUSEQ = 299,
+     MULEQ = 300,
+     DIVEQ = 301,
+     INC = 302,
+     DEC = 303,
+     UMINUS = 304,
+     NOTPREC = 305,
+     TILDEPREC = 306,
+     SIZEOFPREC = 307
    };
 #endif
 
@@ -120,7 +123,7 @@ typedef union YYSTYPE
 
 
 /* Line 1685 of yacc.c  */
-#line 124 "parser.tab.h"
+#line 127 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

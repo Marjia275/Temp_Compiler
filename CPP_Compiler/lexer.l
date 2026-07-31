@@ -59,6 +59,9 @@ LETTER      [a-zA-Z_]
 "long"     { reportToken("KEYWORD", yytext); return KW_LONG; }
 "unsigned" { reportToken("KEYWORD", yytext); return KW_UNSIGNED; }
 "sizeof"   { reportToken("KEYWORD", yytext); return KW_SIZEOF; }
+"switch"   { reportToken("KEYWORD", yytext); return KW_SWITCH; }
+"case"     { reportToken("KEYWORD", yytext); return KW_CASE; }
+"default"  { reportToken("KEYWORD", yytext); return KW_DEFAULT; }
 
 {DIGIT}+"."{DIGIT}+   { reportToken("FLOAT", yytext); yylval.fval = atof(yytext); return FLOAT_LIT; }
 {DIGIT}+              { reportToken("INTEGER", yytext); yylval.ival = strtoll(yytext, nullptr, 10); return INT_LIT; }

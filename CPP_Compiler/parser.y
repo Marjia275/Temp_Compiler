@@ -60,6 +60,7 @@ static ASTNode* mkNode(NodeType t) {
 %token KW_IF KW_ELSE KW_WHILE KW_DO KW_FOR KW_BREAK KW_CONTINUE KW_RETURN
 %token KW_COUT KW_CIN KW_ENDL
 %token KW_CONST KW_LONG KW_UNSIGNED KW_SIZEOF
+%token KW_SWITCH KW_CASE KW_DEFAULT
 %token EQ NE LE GE AND OR SHL SHR PLUSEQ MINUSEQ MULEQ DIVEQ INC DEC
 
 /* ---------------- Precedence (low to high) ---------------- */
@@ -84,6 +85,7 @@ static ASTNode* mkNode(NodeType t) {
 %type <node> vardecl assign_stmt compound_assign_stmt
 %type <node> if_stmt while_stmt do_while_stmt for_stmt return_stmt
 %type <node> for_init for_cond for_update
+%type <node> switch_stmt case_list case_stmt
 %type <node> expr
 %type <node> declarator
 %type <nodelist> declarator_list
@@ -120,6 +122,7 @@ stmt:
     | while_stmt                    { $$ = $1; }
     | do_while_stmt                  { $$ = $1; }
     | for_stmt                       { $$ = $1; }
+    | switch_stmt                     { $$ = $1; }
     | KW_BREAK ';'                     { $$ = mkNode(NODE_BREAK); }
     | KW_CONTINUE ';'                   { $$ = mkNode(NODE_CONTINUE); }
     | return_stmt ';'                    { $$ = $1; }
@@ -290,6 +293,34 @@ for_stmt:
             $$->children.push_back($5);
             $$->children.push_back($7);
             $$->children.push_back($9);
+        }
+    ;
+
+switch_stmt:
+    KW_SWITCH '(' expr ')' '{' case_list '}'
+        {
+            $$ = mkNode(NODE_SWITCH);
+            $$->children.push_back($3);   // switch expr
+            $$->children.push_back($6);   // NODE_BLOCK of case/default nodes
+        }
+    ;
+
+case_list:
+    /* empty */              { $$ = mkNode(NODE_BLOCK); }
+    | case_list case_stmt     { $1->children.push_back($2); $$ = $1; }
+    ;
+
+case_stmt:
+    KW_CASE expr ':' stmt_list
+        {
+            $$ = mkNode(NODE_CASE);
+            $$->children.push_back($2);  // case value expr
+            $$->children.push_back($4);  // NODE_BLOCK of statements
+        }
+    | KW_DEFAULT ':' stmt_list
+        {
+            $$ = mkNode(NODE_DEFAULT);
+            $$->children.push_back($3);  // NODE_BLOCK of statements
         }
     ;
 

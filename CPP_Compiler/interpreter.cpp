@@ -435,6 +435,45 @@ void Interpreter::execStatement(ASTNode* stmt) {
             break;
         }
 
+        case NODE_SWITCH: {
+            // children[0] = switch expr, children[1] = NODE_BLOCK of NODE_CASE / NODE_DEFAULT
+            Value swVal = evalExpr(stmt->children[0]);
+            ASTNode* caseList = stmt->children[1];
+
+            long long target = swVal.asLongLong();
+            int matchIndex = -1;
+            int defaultIndex = -1;
+
+            // First pass: find the matching case (or remember default's position)
+            for (size_t i = 0; i < caseList->children.size(); i++) {
+                ASTNode* c = caseList->children[i];
+                if (c->type == NODE_CASE) {
+                    Value caseVal = evalExpr(c->children[0]);
+                    if (caseVal.asLongLong() == target) {
+                        matchIndex = (int)i;
+                        break;
+                    }
+                } else if (c->type == NODE_DEFAULT) {
+                    defaultIndex = (int)i;
+                }
+            }
+
+            int startIndex = (matchIndex != -1) ? matchIndex : defaultIndex;
+
+            if (startIndex != -1) {
+                try {
+                    for (size_t i = startIndex; i < caseList->children.size(); i++) {
+                        ASTNode* c = caseList->children[i];
+                        ASTNode* body = (c->type == NODE_CASE) ? c->children[1] : c->children[0];
+                        execBlock(body);
+                    }
+                } catch (BreakSignal&) {
+                    // break exits the switch only
+                }
+            }
+            break;
+        }
+
         case NODE_BREAK:
             throw BreakSignal{};
 
