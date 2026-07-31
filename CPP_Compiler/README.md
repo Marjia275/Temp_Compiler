@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Mini C++ Compiler
 
 A Flex + Bison + C++ compiler for a subset of C++, built the same way as
