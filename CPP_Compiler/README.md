@@ -109,17 +109,6 @@ win_bison -d --defines=parser.tab.h -o parser.tab.cpp parser.y
 win_flex -o lex.yy.cpp lexer.l
 g++ -std=gnu++17 ast.cpp symbol_table.cpp semantic.cpp interpreter.cpp tac.cpp codegen.cpp assembly.cpp main.cpp lex.yy.cpp parser.tab.cpp -o compiler.exe
 ```
-
-or simply:
-
-```
-make FLEX=win_flex BISON=win_bison
-```
-
-### Linux / macOS / MSYS2 (flex / bison)
-
-```
-make
 ```
 
 which expands to:
@@ -234,9 +223,6 @@ and read any conflict warnings it prints — if there are none, the
 grammar is clean; if there are a few, tell me what they say and I'll fix
 them immediately.
 
-## Roadmap (if you want to extend it further)
-
-- Multiple declarators per line: `int a = 5, b = 10;`
 - Arrays, vectors, and pointers
 - User-defined functions beyond `main()`
 - `switch` / classes
