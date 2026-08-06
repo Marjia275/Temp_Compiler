@@ -1,0 +1,222 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, header, .editor-panel, button, select {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+#terminal, #terminal * {
+  font-family: 'Consolas', 'Courier New', monospace !important;
+}
+
+body {
+  background: #ECEEDF;
+  color: #4A3728;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: #BBDCE5;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #CFAB8D;
+}
+
+header h1 {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 19px;
+  font-weight: 700;
+  color: #4A3728;
+  letter-spacing: 1px;
+  padding: 6px 16px;
+  border: 1.5px solid #CFAB8D;
+  border-radius: 6px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(74, 55, 40, 0.15);
+  position: relative;
+}
+
+header h1::before {
+  content: '<';
+  color: #CFAB8D;
+  margin-right: 4px;
+  opacity: 0.9;
+}
+
+header h1::after {
+  content: '/>';
+  color: #CFAB8D;
+  margin-left: 6px;
+  opacity: 0.9;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+#language {
+  background: #ffffff;
+  color: #4A3728;
+  border: 1.5px solid #D9C4B0;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  min-height: 0;
+}
+
+.editor-panel, .terminal-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0; /* prevent long code lines from stretching this panel */
+}
+
+#editor {
+  flex: 1;
+  min-height: 0;
+  min-width: 0; /* same fix, applied to the CodeMirror wrapper itself */
+  border: 2px solid #D9C4B0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#editor .CodeMirror {
+  height: 100%;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#runBtn {
+  background: #ffffff;
+  color: #3A2A1C;
+  border: 2.5px solid #CFAB8D;
+}
+
+#runBtn:hover:not(:disabled) {
+  background: #e9ddd8;
+}
+
+#stopBtn {
+  background: #D9C4B0;
+  color: #3A2A1C;
+  border: 2.5px solid #CFAB8D;
+}
+
+#stopBtn:hover:not(:disabled) {
+  background: #E5D5C4;
+}
+
+.terminal-panel {
+  background: #BBDCE5;
+  border: 2px solid #D9C4B0;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+#terminal {
+   flex: 1;
+  min-height: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  padding: 4px 8px 4px 12px;   /* ← added: bigger left padding shifts text right */
+  background: #ecf1f4; 
+}
+
+
+
+.cm-s-vscode-dark.CodeMirror {
+  background: #1e1e1e;
+  color: #d4d4d4;
+}
+
+.cm-s-vscode-dark .CodeMirror-gutters {
+  background: #1e1e1e;
+  border-right: 1px solid #2b2b2b;
+}
+
+.cm-s-vscode-dark .CodeMirror-linenumber {
+  color: #858585;
+  padding: 0 8px 0 12px;
+}
+
+.cm-s-vscode-dark .CodeMirror-cursor {
+  border-left: 1px solid #aeafad;
+}
+
+.cm-s-vscode-dark .CodeMirror-selected {
+  background: #264f78;
+}
+
+.cm-s-vscode-dark .CodeMirror-activeline-background {
+  background: #2a2d2e;
+}
+
+.cm-s-vscode-dark .CodeMirror-matchingbracket {
+  color: #ffd700 !important;
+  background: rgba(255, 215, 0, 0.15);
+  font-weight: bold;
+}
+
+.cm-s-vscode-dark .cm-keyword { color: #569cd6; }
+.cm-s-vscode-dark .cm-def { color: #dcdcaa; }
+.cm-s-vscode-dark .cm-variable { color: #9cdcfe; }
+.cm-s-vscode-dark .cm-variable-2 { color: #9cdcfe; }
+.cm-s-vscode-dark .cm-variable-3,
+.cm-s-vscode-dark .cm-type { color: #4ec9b0; }
+.cm-s-vscode-dark .cm-property { color: #9cdcfe; }
+.cm-s-vscode-dark .cm-operator { color: #d4d4d4; }
+.cm-s-vscode-dark .cm-string { color: #ce9178; }
+.cm-s-vscode-dark .cm-string-2 { color: #ce9178; }
+.cm-s-vscode-dark .cm-number { color: #b5cea8; }
+.cm-s-vscode-dark .cm-atom { color: #569cd6; }
+.cm-s-vscode-dark .cm-meta { color: #d4d4d4; }
+.cm-s-vscode-dark .cm-tag { color: #569cd6; }
+.cm-s-vscode-dark .cm-attribute { color: #9cdcfe; }
+.cm-s-vscode-dark .cm-qualifier { color: #4ec9b0; }
+.cm-s-vscode-dark .cm-builtin { color: #4ec9b0; }
+.cm-s-vscode-dark .cm-bracket { color: #d4d4d4; }
+.cm-s-vscode-dark .cm-comment { color: #6a9955; font-style: italic; }
+.cm-s-vscode-dark .cm-error { color: #f48771; }
+.cm-s-vscode-dark .CodeMirror-placeholder { color: #6a6a6a !important; }

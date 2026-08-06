@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mini Compiler IDE</title>
+  <link rel="stylesheet" href="xterm.css" />
+  <link rel="stylesheet" href="vendor/codemirror/codemirror.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>Temp Compiler</h1>
+    </div>
+    <select id="language">
+      <option value="c">C</option>
+      <option value="cpp">C++</option>
+      <option value="java">Java</option>
+    </select>
+  </header>
+
+  <main>
+    <section class="editor-panel">
+      <div id="editor"></div>
+      <div class="button-row">
+        <button id="runBtn">▶ Run</button>
+        <button id="stopBtn" disabled>■ Stop</button>
+      </div>
+    </section>
+
+    <section class="terminal-panel">
+      <div id="terminal"></div>
+    </section>
+  </main>
+
+  <script src="xterm.js"></script>
+  <script src="vendor/codemirror/codemirror.js"></script>
+  <script src="vendor/codemirror/clike.js"></script>
+  <script src="vendor/codemirror/matchbrackets.js"></script>
+  <script src="vendor/codemirror/active-line.js"></script>
+  <script src="vendor/codemirror/placeholder.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
