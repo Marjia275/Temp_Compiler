@@ -69,6 +69,7 @@ int main()
     x -= 3; printf("x after -= 3: %d\n", x);
     x *= 2; printf("x after *= 2: %d\n", x);
     x /= 4; printf("x after /= 4: %d\n", x);
+    x%= 3; printf("x after %= 3: %d\n", x);
 
     // ---------------- comparison operators ----------------
     int pcmp = 10, qcmp = 20;

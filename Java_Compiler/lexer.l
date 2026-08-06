@@ -122,6 +122,7 @@ WS          [ \t\r\n]
 "-="   { reportToken("OP", yytext); return MINUSEQ; }
 "*="   { reportToken("OP", yytext); return MULEQ; }
 "/="   { reportToken("OP", yytext); return DIVEQ; }
+"%="   { reportToken("OP", yytext); return MODEQ; }
 "++"   { reportToken("OP", yytext); return INC; }
 "--"   { reportToken("OP", yytext); return DEC; }
 "<<"   { reportToken("OP", yytext); return LSHIFT; }

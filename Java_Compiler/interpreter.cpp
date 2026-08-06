@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <cmath>
 
 using namespace std;
 
@@ -293,7 +294,7 @@ void Interpreter::execStatement(ASTNode* stmt) {
             break;
         }
 
-        case NODE_COMPOUND_ASSIGN: {
+    case NODE_COMPOUND_ASSIGN: {
             Symbol* sym = table->lookup(stmt->sval);
             if (!sym) throw runtime_error("Runtime error: variable '" + stmt->sval + "' not declared.");
             Value cur;
@@ -319,6 +320,10 @@ void Interpreter::execStatement(ASTNode* stmt) {
             else if (stmt->op == "/=") {
                 if (b == 0.0) throw runtime_error("Runtime error: division by zero.");
                 v = a / b;
+            }
+            else if (stmt->op == "%=") {
+                if (b == 0.0) throw runtime_error("Runtime error: division by zero.");
+                v = fmod(a, b);
             }
             Value result;
             if (sym->type == "float" || sym->type == "double") { result.type = sym->type; result.fval = v; }

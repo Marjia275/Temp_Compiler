@@ -95,12 +95,13 @@
      MINUSEQ = 299,
      MULEQ = 300,
      DIVEQ = 301,
-     INC = 302,
-     DEC = 303,
-     UMINUS = 304,
-     NOTPREC = 305,
-     TILDEPREC = 306,
-     SIZEOFPREC = 307
+     MODEQ = 302,
+     INC = 303,
+     DEC = 304,
+     UMINUS = 305,
+     NOTPREC = 306,
+     TILDEPREC = 307,
+     SIZEOFPREC = 308
    };
 #endif
 
@@ -123,7 +124,7 @@ typedef union YYSTYPE
 
 
 /* Line 1685 of yacc.c  */
-#line 127 "parser.tab.h"
+#line 128 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

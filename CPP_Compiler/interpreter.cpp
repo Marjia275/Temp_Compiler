@@ -1,6 +1,4 @@
-// ============================================================
-// interpreter.cpp
-// ============================================================
+
 #include "interpreter.h"
 #include <iostream>
 #include <sstream>
@@ -335,7 +333,7 @@ void Interpreter::execStatement(ASTNode* stmt) {
             break;
         }
 
-        case NODE_COMPOUND_ASSIGN: {
+case NODE_COMPOUND_ASSIGN: {
             Symbol* sym = table->lookup(stmt->sval);
             if (!sym) throw runtime_error(runtimeErrAt(stmt, "Variable '" + stmt->sval + "' not declared."));
             if (sym->isConst) throw runtime_error(runtimeErrAt(stmt, "Cannot modify constant variable '" + stmt->sval + "'."));
@@ -365,6 +363,10 @@ void Interpreter::execStatement(ASTNode* stmt) {
                     if (b == 0.0) throw runtime_error(runtimeErrAt(stmt, "Division by zero."));
                     v = a / b;
                 }
+                else if (stmt->op == "%=") {
+                    if (b == 0.0) throw runtime_error(runtimeErrAt(stmt, "Division by zero."));
+                    v = fmod(a, b);
+                }
                 result.type = sym->type; result.fval = v;
             } else {
                 long long a = cur.asLongLong(), b = rhs.asLongLong();
@@ -375,6 +377,10 @@ void Interpreter::execStatement(ASTNode* stmt) {
                 else if (stmt->op == "/=") {
                     if (b == 0) throw runtime_error(runtimeErrAt(stmt, "Division by zero."));
                     v = a / b;
+                }
+                else if (stmt->op == "%=") {
+                    if (b == 0) throw runtime_error(runtimeErrAt(stmt, "Division by zero."));
+                    v = a % b;
                 }
                 result.type = sym->type; result.ival = v;
             }

@@ -61,7 +61,7 @@ static ASTNode* mkNode(NodeType t) {
 %token KW_COUT KW_CIN KW_ENDL
 %token KW_CONST KW_LONG KW_UNSIGNED KW_SIZEOF
 %token KW_SWITCH KW_CASE KW_DEFAULT
-%token EQ NE LE GE AND OR SHL SHR PLUSEQ MINUSEQ MULEQ DIVEQ INC DEC
+%token EQ NE LE GE AND OR SHL SHR PLUSEQ MINUSEQ MULEQ DIVEQ MODEQ INC DEC
 
 /* ---------------- Precedence (low to high) ---------------- */
 %right '?' ':'
@@ -221,6 +221,8 @@ compound_assign_stmt:
         { $$ = mkNode(NODE_COMPOUND_ASSIGN); $$->sval = *$1; $$->op = "*="; $$->children.push_back($3); delete $1; }
     | IDENTIFIER DIVEQ expr
         { $$ = mkNode(NODE_COMPOUND_ASSIGN); $$->sval = *$1; $$->op = "/="; $$->children.push_back($3); delete $1; }
+    | IDENTIFIER MODEQ expr
+    { $$ = mkNode(NODE_COMPOUND_ASSIGN); $$->sval = *$1; $$->op = "%="; $$->children.push_back($3); delete $1; }
     ;
 
 if_stmt:

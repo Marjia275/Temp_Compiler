@@ -47,7 +47,7 @@ extern bool g_syntaxOk;
 %token KW_SYSOUT_PRINT KW_SYSOUT_PRINTLN KW_SYSTEM_IN
 %token KW_IMPORT KW_NEW KW_FINAL
 %token KW_SWITCH KW_CASE KW_DEFAULT
-%token EQ NE LE GE AND OR PLUSEQ MINUSEQ MULEQ DIVEQ INC DEC LSHIFT RSHIFT
+%token EQ NE LE GE AND OR SHL SHR PLUSEQ MINUSEQ MULEQ DIVEQ MODEQ INC DEC
 
 /*  Precedence (low to high)  */
 %right '?' ':'
@@ -210,6 +210,8 @@ compound_assign_stmt:
         { $$ = new ASTNode(NODE_COMPOUND_ASSIGN); $$->sval = *$1; $$->op = "*="; $$->children.push_back($3); delete $1; }
     | IDENTIFIER DIVEQ expr
         { $$ = new ASTNode(NODE_COMPOUND_ASSIGN); $$->sval = *$1; $$->op = "/="; $$->children.push_back($3); delete $1; }
+    | IDENTIFIER MODEQ expr
+        { $$ = new ASTNode(NODE_COMPOUND_ASSIGN); $$->sval = *$1; $$->op = "%="; $$->children.push_back($3); delete $1; }
     ;
 
 if_stmt:

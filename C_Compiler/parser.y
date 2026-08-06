@@ -1,9 +1,5 @@
 %{
-// ============================================================
-// parser.y
-// Syntax Analyzer for Mini C Compiler
-// Builds the AST for main.cpp / semantic.cpp / interpreter.cpp
-// ============================================================
+
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -53,7 +49,7 @@ extern bool g_syntaxOk;
 %token KW_PRINTF KW_SCANF KW_SIZEOF
 %token KW_SQRT KW_POW KW_ABS KW_CEIL KW_FLOOR
 %token KW_RETURN KW_VOID
-%token EQ NE LE GE AND OR PLUSEQ MINUSEQ MULEQ DIVEQ INC DEC LSHIFT RSHIFT
+%token EQ NE LE GE AND OR SHL SHR PLUSEQ MINUSEQ MULEQ DIVEQ MODEQ INC DEC
 
 /* ---------------- Precedence (low to high) ---------------- */
 %right '?' ':'
@@ -200,6 +196,8 @@ compound_assign_stmt:
         { $$ = new ASTNode(NODE_COMPOUND_ASSIGN); $$->sval = *$1; $$->op = "*="; $$->line = yylineno; $$->children.push_back($3); delete $1; }
     | IDENTIFIER DIVEQ expr
         { $$ = new ASTNode(NODE_COMPOUND_ASSIGN); $$->sval = *$1; $$->op = "/="; $$->line = yylineno; $$->children.push_back($3); delete $1; }
+    | IDENTIFIER MODEQ expr
+    { $$ = new ASTNode(NODE_COMPOUND_ASSIGN); $$->sval = *$1; $$->op = "%="; $$->line = yylineno; $$->children.push_back($3); delete $1; }
     ;
 
 if_stmt:

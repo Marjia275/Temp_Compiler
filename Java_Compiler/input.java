@@ -53,6 +53,9 @@ public class Main {
         x /= 4;
         System.out.println("x after /= 4: " + x);
 
+        x%= 3;
+        System.out.println("x after %= 3: " + x);
+
         System.out.println("Comparison Operators:");
 
         int p = 10;

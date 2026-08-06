@@ -93,17 +93,20 @@
      GE = 297,
      AND = 298,
      OR = 299,
-     PLUSEQ = 300,
-     MINUSEQ = 301,
-     MULEQ = 302,
-     DIVEQ = 303,
-     INC = 304,
-     DEC = 305,
-     LSHIFT = 306,
-     RSHIFT = 307,
-     UMINUS = 308,
-     NOTPREC = 309,
-     BITNOT = 310
+     SHL = 300,
+     SHR = 301,
+     PLUSEQ = 302,
+     MINUSEQ = 303,
+     MULEQ = 304,
+     DIVEQ = 305,
+     MODEQ = 306,
+     INC = 307,
+     DEC = 308,
+     RSHIFT = 309,
+     LSHIFT = 310,
+     UMINUS = 311,
+     NOTPREC = 312,
+     BITNOT = 313
    };
 #endif
 
@@ -126,7 +129,7 @@ typedef union YYSTYPE
 
 
 /* Line 1685 of yacc.c  */
-#line 130 "parser.tab.h"
+#line 133 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

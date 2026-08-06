@@ -1,6 +1,4 @@
-// ============================================================
-// interpreter.cpp
-// ============================================================
+
 #include "interpreter.h"
 #include <iostream>
 #include <cstdio>
@@ -372,7 +370,7 @@ void Interpreter::execStatement(ASTNode* stmt) {
             break;
         }
 
-        case NODE_COMPOUND_ASSIGN: {
+       case NODE_COMPOUND_ASSIGN: {
             Symbol* sym = table->lookup(stmt->sval);
             if (!sym) throw runtime_error("Runtime Error:\nVariable '" + stmt->sval + "' not declared.");
             if (sym->isConst) throw runtime_error("Runtime Error:\nCannot modify constant variable '" + stmt->sval + "'.");
@@ -389,6 +387,10 @@ void Interpreter::execStatement(ASTNode* stmt) {
             else if (stmt->op == "/=") {
                 if (b == 0.0) throw runtime_error("Runtime Error:\nDivision by zero.");
                 v = a / b;
+            }
+            else if (stmt->op == "%=") {
+                if (b == 0.0) throw runtime_error("Runtime Error:\nDivision by zero.");
+                v = fmod(a, b);
             }
             Value result;
             if (sym->type == "float" || sym->type == "double") { result.type = sym->type; result.fval = v; }

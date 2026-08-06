@@ -34,7 +34,7 @@
 /* "%code requires" blocks.  */
 
 /* Line 1685 of yacc.c  */
-#line 26 "parser.y"
+#line 22 "parser.y"
 
     #include <string>
     #include <vector>
@@ -89,16 +89,19 @@
      GE = 293,
      AND = 294,
      OR = 295,
-     PLUSEQ = 296,
-     MINUSEQ = 297,
-     MULEQ = 298,
-     DIVEQ = 299,
-     INC = 300,
-     DEC = 301,
-     LSHIFT = 302,
-     RSHIFT = 303,
-     UMINUS = 304,
-     NOTPREC = 305
+     SHL = 296,
+     SHR = 297,
+     PLUSEQ = 298,
+     MINUSEQ = 299,
+     MULEQ = 300,
+     DIVEQ = 301,
+     MODEQ = 302,
+     INC = 303,
+     DEC = 304,
+     RSHIFT = 305,
+     LSHIFT = 306,
+     UMINUS = 307,
+     NOTPREC = 308
    };
 #endif
 
@@ -109,7 +112,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1685 of yacc.c  */
-#line 34 "parser.y"
+#line 30 "parser.y"
 
     int ival;
     double fval;
@@ -121,7 +124,7 @@ typedef union YYSTYPE
 
 
 /* Line 1685 of yacc.c  */
-#line 125 "parser.tab.h"
+#line 128 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

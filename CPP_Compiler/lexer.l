@@ -1,8 +1,5 @@
 %{
-// ============================================================
-// lexer.l
-// Lexical Analyzer for Mini C++ Compiler
-// ============================================================
+
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
@@ -123,6 +120,7 @@ LETTER      [a-zA-Z_]
 "-="   { reportToken("OP", yytext); return MINUSEQ; }
 "*="   { reportToken("OP", yytext); return MULEQ; }
 "/="   { reportToken("OP", yytext); return DIVEQ; }
+"%="   { reportToken("OP", yytext); return MODEQ; }
 "++"   { reportToken("OP", yytext); return INC; }
 "--"   { reportToken("OP", yytext); return DEC; }
 
