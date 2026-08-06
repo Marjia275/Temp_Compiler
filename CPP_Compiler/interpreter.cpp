@@ -36,6 +36,7 @@ static string runtimeErrAt(ASTNode* node, const string& msg) {
 
 void Interpreter::run(ASTNode* program, SymbolTable& finalTable) {
     table = &finalTable;
+    std::cout << std::unitbuf;
     try {
         execBlock(program);
     } catch (ReturnSignal&) {

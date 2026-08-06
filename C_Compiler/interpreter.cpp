@@ -10,6 +10,8 @@ using namespace std;
 
 void Interpreter::run(ASTNode* program, SymbolTable& finalTable) {
     table = &finalTable;
+    std::cout << std::unitbuf;
+    setvbuf(stdout, NULL, _IONBF, 0);
     try {
         execBlock(program);
     } catch (ReturnSignal&) {

@@ -48,7 +48,7 @@ int main()
     cout << "x after *= 2: " << x << endl;
     x /= 4;
     cout << "x after /= 4: " << x << endl;
-    x=x%3;
+    x %= 3;
     cout << "x after %= 3: " << x << endl;
 
     cout << "Comparison Operators:" << endl;
