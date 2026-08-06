@@ -13,11 +13,11 @@ int main()
     
     int _123djf = 10; // Valid variable name, can start with an underscore
     
-    //int 123djf = 10; // Invalid variable name, cannot start with a digit
+ 
    
     string greeting = "Hello";
-    //const int MAX = 100; // constant variable   
-    // cout << "The constant MAX is: " << MAX << e ndl;
+    const int MAX = 100; // constant variable   
+    cout << "The constant MAX is: " << MAX << endl;
 
     cout << "Basic C++ subset test" << endl;
 

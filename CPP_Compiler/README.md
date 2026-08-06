@@ -58,50 +58,6 @@ One simplification vs. real C++: each declaration handles **one variable
 at a time** (`int a = 5; int b = 10;` — two statements — rather than
 `int a = 5, b = 10;` on one line).
 
-## How `cout`/`cin` and bitwise `<<`/`>>` share the same operator
-
-This is worth explaining because it's the trickiest design decision in
-this compiler. In real C++, `cout << a << b` and `x << a << b` (bitwise
-shift) are **syntactically identical** — the compiler doesn't know which
-one it is until it looks at the *type* of the left operand and picks an
-`operator<<` overload. This compiler does the same thing:
-
-- `cout`, `cin`, and `endl` are just ordinary expression atoms, parsed by
-  the *same* `<<`/`>>` grammar rules as arithmetic bitwise shifts. There is
-  no separate "print statement" grammar at all — `cout << a << endl;` is
-  parsed as an ordinary expression statement, producing this AST:
-  `((cout << a) << endl)`.
-- At **runtime**, `Interpreter::evalExpr` evaluates the left side of a
-  `<<`/`>>` first. If it evaluates to the special `cout`/`cin` marker
-  value, the interpreter performs a print/read side effect and returns
-  the *same* marker again (mirroring how `ostream::operator<<` returns
-  `*this` in real C++) — that's what makes chaining (`cout << a << b`)
-  work correctly. If the left side is an ordinary number, it falls
-  through to normal integer bitwise shift instead.
-
-This mirrors real C++ semantics closely and avoids inventing any
-special-case grammar rules or ambiguity for `cout`/`cin`.
-
-## Build
-
-You need **Flex** and **Bison** (on Windows: **win_flex** / **win_bison**,
-or plain `flex`/`bison` if you're using MSYS2/MinGW), plus **g++**.
-
-> **Two build quirks you'll hit, both already handled here:**
-> 1. The `%union` carries `std::string*` / `ASTNode*`, which is C++, so
->    the generated scanner/parser must be compiled **as C++**
->    (`lex.yy.cpp` / `parser.tab.cpp`, not `.c`), and `parser.y` uses a
->    `%code requires { ... }` block so the generated header pulls in
->    `ast.h` correctly.
-> 2. Flex-generated code calls the POSIX function `fileno`, which strict
->    `-std=c++17` hides. We build with **`-std=gnu++17`** instead (same
->    language features, keeps that visible).
-> 3. `input.cpp` is a **sample program to run through the compiler**, not
->    part of the compiler's own source — and it has its own `int main()`.
->    Never build with a `*.cpp` glob (it'll pull `input.cpp` in and you'll
->    get a "multiple definition of `main`" linker error). List the
->    compiler's source files explicitly instead, as shown below.
-
 ### Windows (win_flex / win_bison)
 
 ```
@@ -181,51 +137,3 @@ is what actually runs the code.
 `.\compiler.exe input.cpp` prints:
 
 ```
-15
-Greater
-0 1 2
-Sum of odds: 4
-Flag is true and c > 5
-Hello, World!
-Pi is about 3.14159
-mask & 3 = 2
-1 << 4 = 16
-```
-
-## How this was verified
-
-This sandbox has no internet access and neither Flex nor Bison could be
-installed, so `lexer.l` / `parser.y` themselves could not be run through
-the real tools here (exactly as with the Mini C Compiler before it).
-What **was** verified: `input.cpp`'s AST was hand-built directly in C++
-and fed straight into `semantic.cpp`, `interpreter.cpp`, `tac.cpp`,
-`codegen.cpp`, and `assembly.cpp` (skipping only the scanner/parser
-step). Every module compiled cleanly with `-Wall` and produced exactly
-the expected output above, including correct `break`/`continue` behavior,
-`string` concatenation, real C++-style `double` formatting (via genuine
-`std::cout`), and correct TAC/codegen/assembly traces for every
-construct in the test program (this process also caught and fixed a real
-bug in the debug-view tokenizer's handling of string literals containing
-spaces).
-
-The grammar was written and re-checked by hand, reusing the same flat
-`%left`/`%nonassoc` precedence style already confirmed conflict-free by
-real Bison on the Mini C Compiler, extended with more precedence levels
-for the added bitwise/shift operators (in the same order the real
-language uses them). Still, the very first time you build this for real,
-run:
-
-```
-bison -Wall -d --defines=parser.tab.h -o parser.tab.cpp parser.y
-```
-
-and read any conflict warnings it prints — if there are none, the
-grammar is clean; if there are a few, tell me what they say and I'll fix
-them immediately.
-
-- Arrays, vectors, and pointers
-- User-defined functions beyond `main()`
-- `switch` / classes
-=======
-# Temp_Compiler
->>>>>>> 5c5e72851ce1897d8446c9f59497538d84013c2e
