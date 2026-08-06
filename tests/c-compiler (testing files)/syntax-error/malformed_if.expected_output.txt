@@ -1,0 +1,3 @@
+Syntax Error:
+Line 6:
+Expected ')' before '{'.

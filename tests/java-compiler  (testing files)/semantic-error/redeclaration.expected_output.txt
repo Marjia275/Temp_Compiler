@@ -1,0 +1,2 @@
+Semantic Error:
+  Duplicate declaration of variable 'x'.

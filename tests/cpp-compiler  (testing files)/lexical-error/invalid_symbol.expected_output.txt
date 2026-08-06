@@ -1,0 +1,7 @@
+Lexical Error:
+Line 6:
+Unrecognized character '$'.
+Syntax Error:
+Line 6:
+Unexpected token '2'.
+Compilation stopped due to syntax error(s) above.

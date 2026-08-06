@@ -1,0 +1,3 @@
+Semantic Error:
+Line 5:
+Redeclaration of variable 'x' (previously declared at line 4).

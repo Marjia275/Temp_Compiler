@@ -1,0 +1,4 @@
+Syntax Error:
+Line 6:
+Unexpected token 'x'.
+Compilation stopped due to syntax error(s) above.

@@ -1,0 +1,3 @@
+Semantic Error:
+  Variable 'y' used before declaration.
+  Variable 'y' used before declaration.

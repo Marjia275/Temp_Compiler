@@ -1,0 +1,3 @@
+Semantic Error:
+Line 6:
+Undeclared variable 'y' used before declaration.
