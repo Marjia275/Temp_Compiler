@@ -155,10 +155,43 @@ button:disabled {
   padding: 4px;
 }
 
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #282c34;
+  border-radius: 4px 4px 0 0;
+}
+
+.terminal-header-title {
+  color: #ffffff;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+#clearBtn {
+  flex: none;
+  padding: 5px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  background: transparent;
+  border: 1.5px solid #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+#clearBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
 #terminal {
    flex: 1;
   min-height: 0;
-  border-radius: 4px;
+  border-radius: 0 0 4px 4px;
   overflow: hidden;
   padding: 4px 8px 4px 12px;   /* ← added: bigger left padding shifts text right */
   background: #ecf1f4; 

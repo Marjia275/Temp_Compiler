@@ -16,9 +16,38 @@ const term = new Terminal({
 term.open(document.getElementById('terminal'));
 term.writeln('Waiting to run your code...');
 
+// xterm defaults to a fixed 80x24 grid and has no idea how tall its
+// container actually is. Without resizing it manually, it only fills the
+// top ~24 rows, leaving the rest of the panel blank. This measures the
+// real cell size xterm rendered with and resizes the grid to match the
+// container, so it fills the available space edge to edge.
+function fitTerminal() {
+  const container = document.getElementById('terminal');
+  const core = term._core;
+  if (!container || !core || !core._renderService) return;
+
+  const dims = core._renderService.dimensions;
+  const cellWidth = dims && dims.css && dims.css.cell && dims.css.cell.width;
+  const cellHeight = dims && dims.css && dims.css.cell && dims.css.cell.height;
+  if (!cellWidth || !cellHeight) return;
+
+  const cols = Math.max(2, Math.floor(container.clientWidth / cellWidth));
+  const rows = Math.max(1, Math.floor(container.clientHeight / cellHeight));
+
+  if (cols !== term.cols || rows !== term.rows) {
+    term.resize(cols, rows);
+  }
+}
+
+// Fit once after the terminal has finished its initial render, then keep
+// it in sync whenever the window (or panel) is resized.
+requestAnimationFrame(fitTerminal);
+window.addEventListener('resize', fitTerminal);
+
 
 const runBtn = document.getElementById('runBtn');
 const stopBtn = document.getElementById('stopBtn');
+const clearBtn = document.getElementById('clearBtn');
 const languageSelect = document.getElementById('language');
 
 // Map our language <select> values to CodeMirror's clike MIME modes.
@@ -58,10 +87,17 @@ function setRunning(running) {
 }
 
 function connectAndRun() {
+  fitTerminal();
   term.clear();
   inputBuffer = '';
 
-  ws = new WebSocket(`ws://${location.host}`);
+  // Always talk to the backend on its fixed port (3000), regardless of
+  // what port/tool actually served this HTML page. This makes Run work
+  // whether the page was opened via node's own server (localhost:3000)
+  // or via a separate static server like VS Code's Live Server (5500) —
+  // as long as `node server.js` is running in the background.
+  const BACKEND_PORT = 3000;
+  ws = new WebSocket(`ws://${location.hostname}:${BACKEND_PORT}`);
 
   ws.onopen = () => {
     setRunning(true);
@@ -116,6 +152,10 @@ term.onData((char) => {
 });
 
 runBtn.addEventListener('click', connectAndRun);
+
+clearBtn.addEventListener('click', () => {
+  term.clear();
+});
 
 stopBtn.addEventListener('click', () => {
   if (ws) {
