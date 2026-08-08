@@ -5,9 +5,10 @@
 | Ali Hussain | 231-115-170 |
 | Marjia Chowdhury | 231-115-183 |
 
+**Course Name:** Compiler Construction 
 **Course Code:** CSE 416  
 **Institution:** Metropolitan University, Sylhet, Bangladesh  
-**Batch / Section:** 58 - E  
+**Batch / Section:** 58 / E  
 **Supervisor:** Mahbuba Akther Liza
 
 ---
