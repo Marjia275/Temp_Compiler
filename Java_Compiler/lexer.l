@@ -16,6 +16,13 @@ static void reportToken(const char* name, const string& text) {
         cout.width(12); cout << left << name << " " << text << endl;
     }
 }
+
+static void lexError(const string& msg) {
+    cerr << "Lexical Error:" << endl;
+    cerr << "Line " << yylineno << ":" << endl;
+    cerr << msg << endl;
+    exit(1);
+}
 %}
 
 %option noyywrap
@@ -66,6 +73,9 @@ WS          [ \t\r\n]
 {DIGIT}+"."{DIGIT}+[fFdD]?   { reportToken("FLOAT", yytext); yylval.fval = atof(yytext); return FLOAT_LIT; }
 {DIGIT}+[fFdD]               { reportToken("FLOAT", yytext); yylval.fval = atof(yytext); return FLOAT_LIT; }
 {DIGIT}+                     { reportToken("INTEGER", yytext); yylval.ival = atoi(yytext); return INT_LIT; }
+
+{DIGIT}+"."{DIGIT}+{LETTER}({LETTER}|{DIGIT})*   { lexError("Invalid identifier '" + string(yytext) + "' - identifiers cannot start with a digit."); }
+{DIGIT}+{LETTER}({LETTER}|{DIGIT})*              { lexError("Invalid identifier '" + string(yytext) + "' - identifiers cannot start with a digit."); }
 
 \'(\\.|[^\\'])\'      {
                         reportToken("CHAR", yytext);
@@ -156,6 +166,6 @@ WS          [ \t\r\n]
 
 [ \t\r\n]+   { /* ignore whitespace */ }
 
-.      { cerr << "Lexer Error: unknown character '" << yytext << "' at line " << yylineno << endl; }
+.      { lexError("Unrecognized character '" + string(yytext) + "'."); }
 
 %%

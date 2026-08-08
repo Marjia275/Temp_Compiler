@@ -16,6 +16,12 @@ static void reportToken(const char* name, const string& text) {
         cout.width(12); cout << left << name << " " << text << endl;
     }
 }
+static void lexError(const string& msg) {
+    cerr << "Lexical Error:" << endl;
+    cerr << "Line " << yylineno << ":" << endl;
+    cerr << msg << endl;
+    exit(1);
+}
 %}
 
 
@@ -64,6 +70,12 @@ LETTER      [a-zA-Z_]
 {DIGIT}+\.{DIGIT}+   { reportToken("FLOAT", yytext); yylval.fval = atof(yytext); return FLOAT_LIT; }
 {DIGIT}+              { reportToken("INTEGER", yytext); yylval.sval = new string(yytext); return INT_LIT; }
 
+{DIGIT}+"."{DIGIT}+{LETTER}({LETTER}|{DIGIT})*   {
+    lexError("Invalid identifier '" + string(yytext) + "' - identifiers cannot start with a digit.");
+}
+{DIGIT}+{LETTER}({LETTER}|{DIGIT})*   {
+    lexError("Invalid identifier '" + string(yytext) + "' - identifiers cannot start with a digit.");
+}
 \'(\\.|[^\\'])\'      {
                         reportToken("CHAR", yytext);
                         string t(yytext);
@@ -147,13 +159,12 @@ LETTER      [a-zA-Z_]
 ";"    { reportToken("SEMICOLON", yytext); return ';'; }
 ","    { reportToken("COMMA", yytext); return ','; }
 
+
+
 [ \t\r\n]+   { /* ignore whitespace */ }
 
-.      {
-         cerr << "Lexical Error:" << endl;
-         cerr << "Line " << yylineno << ":" << endl;
-         cerr << "Unknown character '" << yytext << "'." << endl;
-         exit(1);
-       }
+.      { lexError("Unrecognized character '" + string(yytext) + "'."); }
+
+
 
 %%
